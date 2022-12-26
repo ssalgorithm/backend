@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssalgorithm.model.dao.SolvedMapper">
+    <select id="selectOne" resultType="com.ssafy.ssalgorithm.model.dto.SolvedDto">
+        SELECT ID, NO, NAME, LEVEL, TAGS, TOTAL_TIME, SOLVE_DATE, USER_ID FROM solved WHERE NO=#{no}
+    </select>
+</mapper>
