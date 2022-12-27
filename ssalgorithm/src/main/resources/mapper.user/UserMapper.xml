@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssalgorithm.user.model.dao.UserMapper">
+    <insert id="insert">
+        insert into user (user_id, password, user_name, user_email, join_date)
+        values (#{userId},#{password},#{userName},#{userEmail},now())
+    </insert>
+    <update id="updateToken">
+        UPDATE user
+        SET token = #{token}
+        WHERE user_id = #{userId}
+    </update>
+    <select id="findByUserId" resultMap="userDto">
+        SELECT *
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+    <resultMap id="userDto" type="com.ssafy.ssalgorithm.user.model.dto.UserDto">
+        <result column="user_id" property="userId"/>
+        <result column="password" property="password"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_email" property="userEmail"/>
+        <result column="join_date" property="joinDate"/>
+    </resultMap>
+</mapper>
