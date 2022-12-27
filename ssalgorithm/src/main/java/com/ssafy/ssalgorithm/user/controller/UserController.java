@@ -6,6 +6,8 @@ import com.ssafy.ssalgorithm.user.model.service.JwtServiceImpl;
 import com.ssafy.ssalgorithm.user.model.service.UserService;
 import com.ssafy.ssalgorithm.user.model.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ import java.util.Map;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final JwtService jwtService;
 
@@ -32,7 +34,27 @@ public class UserController {
 //        this.userService = userService;
 //        this.jwtService = jwtService;
 //    }
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody UserDto userDto){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = HttpStatus.ACCEPTED;
 
+        //log
+        logger.info("{}", userDto);
+        try{
+            userService.join(userDto);
+
+            resultMap.put("message","Join Success");
+            status = HttpStatus.OK;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            resultMap.put("message","Join Error");
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto){
         Map<String, Object> resultMap = new HashMap<>();

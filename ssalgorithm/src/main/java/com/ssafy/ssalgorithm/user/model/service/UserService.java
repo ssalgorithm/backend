@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public interface UserService {
     public UserDto login(UserDto userDto) throws Exception;
+    public void join(UserDto userDto) throws Exception;
     public String getRefreshToken(UserDto userDto) throws SQLException;
 
 }
