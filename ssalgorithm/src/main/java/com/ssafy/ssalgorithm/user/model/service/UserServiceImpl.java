@@ -16,6 +16,17 @@ public class UserServiceImpl implements UserService{
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    public void join(UserDto userDto) throws Exception {
+        //비밀번호 암호화
+        String rawPassword = userDto.getPassword();
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        userDto.setPassword(encodedPassword);
+
+        //insert
+        userMapper.insert(userDto);
+    }
+
+    @Override
     public UserDto login(UserDto userDto) throws Exception{
         //login - 비밀번호 매치 후 비밀번호가 맞지 않는 경우 null 반환
         UserDto findUser = userMapper.findByUserId(userDto);
