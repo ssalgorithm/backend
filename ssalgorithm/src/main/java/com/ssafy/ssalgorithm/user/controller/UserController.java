@@ -70,6 +70,7 @@ public class UserController {
                 String refreshToken = jwtService.createRefreshToken(loginUser);
 
                 // resultMap 에 토큰 저장
+                resultMap.put("message", "success");
                 resultMap.put("access-token", accessToken);
                 resultMap.put("refresh-token", refreshToken);
 
@@ -77,12 +78,12 @@ public class UserController {
 
             }else{
                 //비밀 번호 매치 실패
-                resultMap.put("message","아이디 혹은 비밀번호가 ..");
-                status = HttpStatus.UNAUTHORIZED; //204
+                resultMap.put("message","fail");
+                status = HttpStatus.NO_CONTENT; //204
             }
         }catch (Exception e){
             // 에러
-            resultMap.put("message","아이디 혹은 비밀번호가 ..");
+            resultMap.put("message","fail");
             status = HttpStatus.UNAUTHORIZED; //401
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
